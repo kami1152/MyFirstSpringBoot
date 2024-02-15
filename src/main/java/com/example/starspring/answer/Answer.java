@@ -3,6 +3,7 @@ package com.example.starspring.answer;
 import java.time.LocalDateTime;
 
 import com.example.starspring.question.Question;
+import com.example.starspring.user.SiteUser;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,6 +18,9 @@ import lombok.Setter;
 @Setter
 @Entity
 public class Answer {
+
+    @ManyToOne
+    private SiteUser author;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -26,9 +30,7 @@ public class Answer {
 
     private LocalDateTime createDate;
 
-
     @ManyToOne
     private Question question;
-
 
 }
