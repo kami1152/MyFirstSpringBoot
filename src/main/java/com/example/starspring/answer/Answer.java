@@ -19,6 +19,8 @@ import lombok.Setter;
 @Entity
 public class Answer {
 
+    private LocalDateTime modifyDate;
+
     @ManyToOne
     private SiteUser author;
     @Id
