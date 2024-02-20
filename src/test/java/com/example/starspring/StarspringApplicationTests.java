@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.example.starspring.Service.AnswerService;
 import com.example.starspring.Service.QuestionService;
 import com.example.starspring.repository.QuestionRepository;
 
@@ -17,6 +18,9 @@ class StarspringApplicationTests {
 
 	@Autowired
 	private QuestionService questionService;
+
+	@Autowired
+	private AnswerService answerService;
 
 	@Test
 	void testJpa() {
@@ -34,11 +38,11 @@ class StarspringApplicationTests {
 		 * q2.setCreateDate(LocalDateTime.now());
 		 * this.questionRepository.save(q2);
 		 */
-
 		for (int i = 1; i <= 300; i++) {
-			String subject = String.format("test data : [%03d]", i);
-			String content = "content";
-			this.questionService.create(subject, content, null);
+			String content = "content : " + i;
+			this.answerService.create(this.questionService.getQuestion(1841), content, null);
+
 		}
+
 	}
 }
