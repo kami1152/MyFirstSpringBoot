@@ -1,10 +1,8 @@
-package com.example.starspring.answer;
+package com.example.starspring.comment;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Set;
 
-import com.example.starspring.comment.Comment;
+import com.example.starspring.answer.Answer;
 import com.example.starspring.question.Question;
 import com.example.starspring.user.SiteUser;
 
@@ -13,37 +11,41 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
 
+@Entity
 @Getter
 @Setter
-@Entity
-public class Answer {
+public class Comment {
 
-    private LocalDateTime modifyDate;
-
-    @ManyToOne
-    private SiteUser author;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @ManyToOne
+    private SiteUser author;
 
     @Column(columnDefinition = "TEXT")
     private String content;
 
     private LocalDateTime createDate;
+    private LocalDateTime modifyDate;
 
     @ManyToOne
     private Question question;
 
-    @ManyToMany
-    Set<SiteUser> voter;
+    @ManyToOne
+    private Answer answer;
 
-    @OneToMany(mappedBy = "answer")
-    private List<Comment> commentList;
-
+    public Integer getQuestionId() {
+        Integer result = null;
+        if (this.question != null) {
+            result = this.question.getId();
+        } else if (this.answer != null) {
+            result = this.answer.getQuestion().getId();
+        }
+        return result;
+    }
 }

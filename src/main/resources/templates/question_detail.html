@@ -62,6 +62,50 @@
             th:text="삭제"
           ></a>
         </div>
+
+        <!--Comment 기능 구현-->
+        <div class="mt-3" th:if="${not #lists.isEmpty(question.commentList)}">
+          <div
+            th:each="comment,index : ${question.commentList}"
+            class="comment py-2 text-muted"
+          >
+            <span
+              style="white-space: pre-line"
+              th:text="${comment.content}"
+            ></span>
+            <span
+              th:if="${comment.modifyDate != null}"
+              th:text="|-${comment.author.username}, ${#temporals.format(comment.createDate,'yyyy-MM-dd HH:mm')}(수정:${#temporals.format(comment.modifyDate, 'yyyy-MM-dd HH:mm')})|"
+            >
+            </span>
+            <span
+              th:if="${comment.modifyDate==null}"
+              th:text="|-${comment.author.username}, ${#temporals.format(comment.createDate, 'yyyy-MM-dd HH:mm')}|"
+            ></span>
+            <a
+              sec:authorize="isAuthenticated()"
+              th:if="${#authentication.getPrincipal().getUsername() == comment.author.username}"
+              th:href="@{|/comment/modify/${commentid}|}"
+              class="small"
+              >수정</a
+            >
+            <a
+              sec:authorize="isAuthenticated()"
+              th:if="${#authentication.getPrincipal().getUsername() == comment.author.username}"
+              href="javascript:void(0);"
+              class="small delete"
+              th:data-uri="@{|/comment/delete/${comment.id}|}"
+              >삭제</a
+            >
+          </div>
+        </div>
+        <div>
+          <a
+            th:href="@{|/comment/create/question/${question.id}|}"
+            class="small"
+            ><small>댓글 추가 .. </small></a
+          >
+        </div>
       </div>
     </div>
     <!-- 답변의 갯수 표시 -->
@@ -131,7 +175,11 @@
           class="page-item"
           th:classappend="${!paging.hasPrevious} ? 'disabled'"
         >
-          <a class="page-link" th:href="@{|?page=${paging.number-1}|}">
+          <a
+            class="page-link"
+            th:href="@{|?page=${paging.number-1}#paging-anchor|}"
+            onclick="return false;"
+          >
             <span>이전</span>
           </a>
         </li>
@@ -145,19 +193,21 @@
             th:text="${page}"
             class="page-link"
             th:href="@{|?page=${page}|}"
+            onclick="return false;"
           ></a>
         </li>
         <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
-          <a class="page-link" th:href="@{|?page=${paging.number+1}|}">
+          <a
+            class="page-link"
+            th:href="@{|?page=${paging.number+1}#paging-anchor|}"
+            onclick="return false;"
+          >
             <span>다음</span>
           </a>
         </li>
       </ul>
     </div>
     <!-- 페이징처리 끝 -->
-    <form th:action="@{/question/list}" method="get" id="searchForm">
-      <input type="hidden" id="page" name="page" th:value="${paging.number}" />
-    </form>
 
     <!-- 답변 작성 -->
     <form
@@ -200,14 +250,6 @@
         if (confirm("정말로 추천 하시겠습니까")) {
           location.href = this.dataset.uri;
         }
-      });
-    });
-
-    const page_elements = document.getElementsByClassName("page-link");
-    Array.from(page_elements).forEach(function (element) {
-      element.addEventListener("click", function () {
-        document.getElementById("page").value = this.dataset.page;
-        document.getElementById("searchForm").submit();
       });
     });
   </script>

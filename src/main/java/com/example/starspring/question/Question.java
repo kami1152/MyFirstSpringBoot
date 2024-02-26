@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.example.starspring.answer.Answer;
+import com.example.starspring.comment.Comment;
 import com.example.starspring.user.SiteUser;
 
 import jakarta.persistence.Column;
@@ -48,6 +49,10 @@ public class Question {
     // 추천 기능 작성
     @ManyToMany
     Set<SiteUser> voter;
+
+    // 댓글 연결
+    @OneToMany(mappedBy = "question")
+    private List<Comment> commentList;
 
 }
 // Quetion qust = new Qustion()
