@@ -60,4 +60,17 @@ public class UserController {
         return "login_form";
     }
 
+    @GetMapping("/findpage")
+    public String finduser(){
+        return "find_userinfo";
+    }
+
+    @GetMapping("/idfinder")
+    public String idfinder(){
+        return "find_userinfo";
+    }
+
+ 
+
+
 }

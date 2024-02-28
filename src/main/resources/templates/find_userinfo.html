@@ -1,0 +1,107 @@
+<html layout:decorate="~{layout}">
+
+<head>
+    <style>
+        /* 버튼의 기본 스타일 지정 */
+        .custom-button {
+            background-color: #ffffff;
+            /* 배경색 */
+            border: none;
+            color: rgb(0, 0, 0);
+            padding: 10px 20px;
+            text-align: center;
+            /* 텍스트 가운데 정렬 */
+            text-decoration: none;
+            /* 텍스트에 밑줄 없음 */
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            width: 200px;
+            height: 50px;
+        }
+
+        .aligncontainer {
+            text-align: center;
+        }
+
+        .submitcontainer {
+            display: flex;
+            flex-direction: column;
+            /* 요소들을 세로로 배치 */
+            align-items: center;
+            /* 수평 가운데 정렬 */
+        }
+
+        .submitcontainer label,
+        .submitcontainer button {
+            margin: 20px;
+            display: block;
+            /* 블록 레벨 요소로 변경하여 수직으로 배치 */
+        }
+
+
+        .custom-button:hover {
+            background-color: #a0b1a1;
+        }
+
+        .customcontainer {
+            margin-top: 10px;
+            display: none;
+        }
+
+        .show {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div layout:fragment="content" class="container my-3">
+
+        <div class="aligncontainer">
+            <div class="mb-3">
+                <button onclick="toggleForm('idForm')" class="custom-button">아이디 찾기</button>
+            </div>
+            <div>
+                <button onclick="toggleForm('passwordForm')" class="custom-button">비밀번호 찾기</button>
+            </div>
+
+        </div>
+        <!--id찾기 버튼 클릭시 아이디 입력 폼-->
+        <!--비밀번호찾기 버튼 클릭시 폼-->
+        <!--아이디 입력 폼-->
+        <!--비밀번호 입력 폼-->
+        <div class="aligncontainer">
+            <div class="customcontainer" id="idForm">
+                <div class="submitcontainer">
+                    <div>
+                        <label for="username">이메일</label>
+                        <input type="text" name="useremail" id="useremail" class="form-control">
+                    </div>
+                    <button class="custom-button" type="submit">제출</button>
+                </div>
+            </div>
+            <div class="customcontainer" id="passwordForm">
+                <div class="submitcontainer">
+                    <div>
+                        <label for="username">사용자 아이디</label>
+                        <input type="text" name="username" id="username" class="form-control">
+                    </div>
+                    <div>
+                        <label for="username">이메일</label>
+                        <input type="text" name="useremail" id="useremail" class="form-control">
+                    </div>
+                    <button class="custom-button" type="submit">제출</button>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <script>
+    </script>
+</body>
+
+</html>

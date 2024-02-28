@@ -25,6 +25,16 @@
 <script th:src="@{/js/bootstrap.min.js}"></script>
 
 <!--javascript start!-->
+<script th:inline="javascript">
+    /* 이 부분에 toggleForm() 함수를 정의합니다. */
+    function toggleForm(formId) {
+        var forms = document.getElementsByClassName('customcontainer');
+        for (var i = 0; i < forms.length; i++) {
+            forms[i].classList.remove('show'); // 모든 폼을 숨김
+        }
+        document.getElementById(formId).classList.add('show'); // 선택한 폼만 표시
+    }
+</script>
 <th:block layout:fragment="script"></th:block>
 </body>
 
